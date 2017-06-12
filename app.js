@@ -1,14 +1,13 @@
 
 
 $(document).ready(function(){
- 
+      
     //set timer, count down, once at zero makes a noise
-var counter = 2;
+var counter = 0;
 
  function setTimer(count){
-   console.log(count)
+  $('.workTime').html(count)
 }
-
 
 var triggerTimer = setInterval(
   function(){ 
@@ -21,6 +20,9 @@ var triggerTimer = setInterval(
     }
    
    },1000)
+
+//increment and deincrement timer
+
 
     //then a rest period, once at zero a start noise
 });

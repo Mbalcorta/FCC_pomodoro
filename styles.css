@@ -8,6 +8,19 @@ html *{
   margin: 0 auto;
 }
 
+
+.row
+{
+    display: table;
+    width: 50%; /*Optional*/
+}
+
+.column
+{
+    display: table-cell;
+    background-color: red; /*Optional*/
+}
+
 .timersContainer {
   width: 500px;
   height: 500px;
@@ -15,7 +28,7 @@ html *{
 }
 
 .workTimer, .breakTimer {
-  width: 150px;
-  height: 150px;
+ /* width: 150px;
+  height: 150px;*/
   margin: 0 auto;
 }
