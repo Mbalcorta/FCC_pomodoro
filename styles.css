@@ -1,6 +1,6 @@
-html *{
+/*html *{
   text-align: center;
-}
+}*/
 
 .container {
   width: 1450px;
@@ -8,17 +8,17 @@ html *{
   margin: 0 auto;
 }
 
-
+/*
 .row
 {
     display: table;
-    width: 50%; /*Optional*/
+    width: 50%; 
 }
 
 .column
 {
     display: table-cell;
-    background-color: red; /*Optional*/
+    background-color: red; 
 }
 
 .timersContainer {
@@ -28,7 +28,6 @@ html *{
 }
 
 .workTimer, .breakTimer {
- /* width: 150px;
-  height: 150px;*/
   margin: 0 auto;
 }
+*/
