@@ -80,8 +80,6 @@ $('.increment').click(function(){
     updateTime(countDown);
 })
 
-
-
 //then a rest period, once at zero a start noise
 
 
