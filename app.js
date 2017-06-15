@@ -44,9 +44,17 @@ if(noAction){
 // }
 
 //if countDown number is clicked function starts to count down
+
+//while timer is running disable button
+var disableButton = function(){
+  if(timerStarted === undefined || timerStarted === null){
+    $('button').prop('disabled', false);
+  } else {
+     $('button').prop('disabled', true);
+  }
+}
  
   $('.countDown').click(function(){
-    
     if(!timerStarted){
 //count down timer
       timerStarted = setInterval(
@@ -62,11 +70,14 @@ if(noAction){
        clearInterval(timerStarted);
         timerStarted = null; 
      }
+     disableButton(); 
   })
+
+
 
 //increment and deincrement timer
 
-$('.deincrement').click(function(){
+  $('.deincrement').click(function(){
     if(counterWork > 0){
       counterWork--
       countDown--
@@ -74,11 +85,12 @@ $('.deincrement').click(function(){
     }
 })
 
-$('.increment').click(function(){
+  $('.increment').click(function(){
     counterWork++
     countDown++
     updateTime(countDown);
-})
+  })
+
 
 //then a rest period, once at zero a start noise
 
