@@ -6,11 +6,21 @@ $(document).ready(function(){
 var counterWork = 25;
 var noAction = true;
 var countDown = counterWork; 
-var clickedAlready = false; 
+var timerStarted;
+
 //sets counter to page
 var updateTime = function(currentCounter){
+
+  if(!timerStarted && timerStarted !== null) {
   $('.workTime').html(currentCounter);
   $('.countDown').html(countDown);
+  } else {
+    countDown = counterWork;
+    $('.workTime').html(counterWork);
+    $('.countDown').html(countDown);
+  }
+  
+
 }
 
 //runs counter first time
@@ -20,30 +30,38 @@ if(noAction){
 }
 
 //count down
-var triggerTimer = function(){
-  setInterval(
-  function(){ 
-    if(countDown > 0){
-       countDown--
-      $('.countDown').html(countDown);
-    } else {
-      clearInterval(triggerTimer);
-    }
+// var triggerTimer = function(){
+//   setInterval(
+//   function(){ 
+//     if(countDown > 0){
+//        countDown--
+//       $('.countDown').html(countDown);
+//     } else {
+//       clearInterval(triggerTimer);
+//     }
    
-   },1000)
-}
+//    },1000)
+// }
 
 //if countDown number is clicked function starts to count down
+ 
   $('.countDown').click(function(){
-    if(!clickedAlready){
-       triggerTimer(); 
+    
+    if(!timerStarted){
+//count down timer
+      timerStarted = setInterval(
+        function(){ 
+          if(countDown > 0){
+            countDown--
+            $('.countDown').html(countDown);
+            } else {
+            clearInterval(triggerTimer);
+            }
+              },1000) 
      } else {
-//stop timer when counter count down is clicked*****
-
-    clearInterval(triggerTimer);
-    updateTime(counterWork);
+       clearInterval(timerStarted);
+        timerStarted = null; 
      }
-     clickedAlready = true; 
   })
 
 //increment and deincrement timer
@@ -52,17 +70,15 @@ $('.deincrement').click(function(){
     if(counterWork > 0){
       counterWork--
       countDown--
-      updateTime(counterWork);
+      updateTime(countDown);
     }
 })
 
 $('.increment').click(function(){
     counterWork++
     countDown++
-    updateTime(counterWork);
+    updateTime(countDown);
 })
-
-
 
 
 
