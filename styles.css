@@ -1,33 +1,9 @@
-/*html *{
-  text-align: center;
-}*/
 
-/*.container {
-  width: 1450px;
-  height: 700px;
-  margin: 0 auto;
-}*/
+button, .breakTime, .workTime {
 
-/*
-.row
-{
-    display: table;
-    width: 50%; 
+  display: inline-block
+
 }
 
-.column
-{
-    display: table-cell;
-    background-color: red; 
-}
 
-.timersContainer {
-  width: 500px;
-  height: 500px;
-  margin: 0 auto;
-}
 
-.workTimer, .breakTimer {
-  margin: 0 auto;
-}
-*/

@@ -5,7 +5,8 @@ $(document).ready(function(){
     //set timer, count down, once at zero makes a noise
 var counterWork = 25;
 var noAction = true;
-var countDown = counterWork; 
+var countDown = counterWork;
+var breakTimer = 5;  
 var timerStarted;
 
 //sets counter to page
@@ -93,7 +94,7 @@ var disableButton = function(){
 
 
 //then a rest period, once at zero a start noise
-
+$('.breakTime').html(breakTimer);
 
 
 });
