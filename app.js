@@ -5,7 +5,7 @@ $(document).ready(function(){
     //set timer, count down, once at zero makes a noise
 var seconds = "00"; 
 var colon = ":"
-var minutes = 3;
+var minutes = 25;
 var noAction = true;
 var countDown = minutes;
 var breakTimer = 5;  
@@ -43,41 +43,53 @@ var disableButton = function(){
     if(!timerStarted){
 //count down timer
     seconds = parseInt(seconds); 
+
       timerStarted = setInterval(
         function(){ 
         
         if(seconds === 0){
           lengthOfSeconds = 2; 
-        } else {
+          } else {
            lengthOfSeconds = seconds.toString().length;
-        }
-         
-  
+         }
+
           if(seconds === 0 && minutes !== 0){
             minutes--;
             seconds = 59; 
             stringOfMinutes = minutes+colon+seconds;
+            console.log('one ', stringOfMinutes, seconds)
           $('.countDown').html(stringOfMinutes);
-          } else if(seconds > 0 && lengthOfSeconds === 2){
-            seconds--; 
-            lengthOfSeconds = seconds.toString().length;
-            stringOfMinutes = minutes+colon+seconds;
-            $('.countDown').html(stringOfMinutes)
+            } else if(seconds > 0 ){
+              seconds--; 
+              lengthOfSeconds = seconds.toString().length;
+            
               } else if(lengthOfSeconds < 2 && seconds > 0){
                 console.log(seconds, lengthOfSeconds)
                 seconds--;
-                stringOfMinutes = minutes+colon+"0"+seconds;
-                $('.countDown').html(stringOfMinutes);
+               
               } else {
-                console.log('three')
-//make noise then clear timer
+ 
+       //make noise then clear timer
             clearInterval(timerStarted);
+            timerStarted = null;
             }
-              },500) 
-     } else {
-       clearInterval(timerStarted);
-        timerStarted = null; 
+
+            if(lengthOfSeconds === 2 && seconds !== 0){
+                stringOfMinutes = minutes+colon+seconds;
+            console.log('two ', stringOfMinutes , seconds)
+            $('.countDown').html(stringOfMinutes)
+            } else {
+               stringOfMinutes = minutes+colon+"0"+seconds;
+                console.log('three ', stringOfMinutes, seconds)
+                $('.countDown').html(stringOfMinutes);
+            }
+              },1000) 
      }
+
+     //  else {
+     //   clearInterval(timerStarted);
+     //    timerStarted = null; 
+     // }
      disableButton(); 
   })
 
