@@ -12,7 +12,8 @@ var breakTimer = 5;
 var timerStarted;
 var stringOfMinutes = minutes+colon+seconds;
 var lengthOfSeconds = seconds.toString().length;
-
+var bubbleWidth = 0;
+var bubbleHeight = 0; 
 
 //sets counter to page
 var updateTime = function(currentCounter){
@@ -27,6 +28,25 @@ if(noAction){
    noAction = false; 
 }
 
+
+//opens up bubble when timer started
+function startBubble(){
+   
+   if ($(".open")[0]){
+    console.log('now i exist')
+    // Do something if class exists
+    bubbleWidth += 10; 
+    bubbleHeight += 10; 
+    console.log(bubbleWidth, bubbleHeight)
+    // $(".open").css("width", bubbleWidth);
+    // $(".open").css("height", bubbleHeight);
+
+} else {
+  console.log('did not exist')
+    // Do something if class does not exist
+    $("img").addClass("open");
+  }
+}
 
 //if countDown number is clicked function starts to count down
 
@@ -83,13 +103,10 @@ var disableButton = function(){
                 console.log('three ', stringOfMinutes, seconds)
                 $('.countDown').html(stringOfMinutes);
             }
+            startBubble();
+            console.log('each time')
               },1000) 
      }
-
-     //  else {
-     //   clearInterval(timerStarted);
-     //    timerStarted = null; 
-     // }
      disableButton(); 
   })
 
@@ -117,23 +134,6 @@ var disableButton = function(){
 //then a rest period, once at zero a start noise
 $('.breakTime').html(breakTimer);
 
-
- $("img").animate({
-       height: "180px",
-    width: "180px",
-    top: "-=90px",
-    left: "-=90px",
-        },
-        {
-            duration: 5000,
-            step: function() {
-       
-                console.log($(this).width());
-            },
-            complete: function() {
-                 console.log("finished");
-            }
-     });
 
 
 });

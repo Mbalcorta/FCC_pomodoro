@@ -7,11 +7,24 @@ button, .breakTime, .workTime {
 
 
 img {
-  position: relative;
-  top: 100px;
-  left: 100px;
-  height: 0px;
-  width: 0px;
-  border-radius: 100%;
+   position: relative;
+    width: 0px;
+    height: 0px;
+    -webkit-transition-duration: 1s;
+    -webkit-transition-property: all;
+    -webkit-transition-timing-function: ease-in-out;
+    text-align: center;
+    color: white;
+    border-radius: 100%;
+    padding: 20px;
+    overflow: hidden;
+    font-family: sans-serif;  /* Just 'cos */
 }
 
+
+.open {
+    top: 0px;
+    left: 0px;
+    width: 100px;
+    height: 100px;
+}
