@@ -118,4 +118,22 @@ var disableButton = function(){
 $('.breakTime').html(breakTimer);
 
 
+ $("img").animate({
+       height: "180px",
+    width: "180px",
+    top: "-=90px",
+    left: "-=90px",
+        },
+        {
+            duration: 5000,
+            step: function() {
+       
+                console.log($(this).width());
+            },
+            complete: function() {
+                 console.log("finished");
+            }
+     });
+
+
 });
