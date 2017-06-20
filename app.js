@@ -31,7 +31,6 @@ if(noAction){
   $(".pop").hide();
 }
 
-
 //opens up bubble when timer started
 function startBubble(){
     
@@ -49,6 +48,10 @@ function startBubble(){
 }
 
 //if countDown number is clicked function starts to count down
+function resetBubble(){
+    bubbleHeight = 0;
+    bubbleWidth = 0; 
+}
 
 function bubblePop(){
   $("img").hide();
@@ -70,7 +73,7 @@ var disableButton = function(){
   $('.timerCountDown').click(function(){
     if(!timerStarted){
 //count down timer
-    seconds = parseInt(seconds); 
+      seconds = parseInt(seconds); 
 
       timerStarted = setInterval(
         function(){ 
@@ -82,12 +85,14 @@ var disableButton = function(){
          }
 
           if(seconds === 0 && minutes !== 0){
+            countDown--; 
             minutes--;
             seconds = 59; 
             stringOfMinutes = minutes+colon+seconds;
           $('.countDown').html(stringOfMinutes);
             } else if(seconds > 0 ){
               seconds--; 
+               console.log('minutes and seconds ', minutes, seconds)
               lengthOfSeconds = seconds.toString().length;
             
               } else if(lengthOfSeconds < 2 && seconds > 0){
@@ -95,11 +100,13 @@ var disableButton = function(){
                
               } else {
  
-       //make noise when timer is up
-            bubblePop();
-            clearInterval(timerStarted);
-            timerStarted = null;
-            }
+       //when timer is up
+                bubblePop();
+                resetBubble(); 
+                clearInterval(timerStarted);
+                timerStarted = null;
+                $('button').prop('disabled', false);
+              }
 
             if(lengthOfSeconds === 2 && seconds !== 0){
                 stringOfMinutes = minutes+colon+seconds;
@@ -110,15 +117,16 @@ var disableButton = function(){
             }
             startBubble();
               },1000) 
-     }
-     else {
+     } else {
  
        //make bubble reset when timer paused
-            bubbleHeight = 0;
-            bubbleWidth = 0; 
+       console.log('in here')
+            resetBubble()
             clearInterval(timerStarted);
             timerStarted = null;
-            }
+            console.log(minutes, seconds)
+        }
+
      disableButton(); 
   })
 
@@ -127,6 +135,7 @@ var disableButton = function(){
 //increment and deincrement timer
 
   $('.deincrement').click(function(){
+    $(".pop").hide();
     if(minutes > 1){
       minutes--
       countDown--
@@ -136,10 +145,19 @@ var disableButton = function(){
 })
 
   $('.increment').click(function(){
-    minutes++
+    $(".pop").hide();
+    if(minutes === 0 && seconds <= 59) {
+    minutes = 1; 
+    countDown = 1; 
+    seconds = "00"
+    updateTime(countDown);
+      } else {
+    minutes++;
     countDown++
     seconds = "00"
     updateTime(countDown);
+    }
+     console.log('######incremented ', minutes, seconds, countDown)
   })
 
 
