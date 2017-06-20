@@ -5,15 +5,17 @@ $(document).ready(function(){
     //set timer, count down, once at zero makes a noise
 var seconds = "00"; 
 var colon = ":"
-var minutes = 25;
+var minutes = 1;
 var noAction = true;
 var countDown = minutes;
 var breakTimer = 5;  
 var timerStarted;
 var stringOfMinutes = minutes+colon+seconds;
 var lengthOfSeconds = seconds.toString().length;
+var totalSeconds = minutes * 60; 
 var bubbleWidth = 0;
 var bubbleHeight = 0; 
+var totalBubbleExpansion = 300/totalSeconds; 
 
 //sets counter to page
 var updateTime = function(currentCounter){
@@ -26,29 +28,35 @@ var updateTime = function(currentCounter){
 if(noAction){
    updateTime(minutes);
    noAction = false; 
+  $(".pop").hide();
 }
 
 
 //opens up bubble when timer started
 function startBubble(){
-   
-   if ($(".open")[0]){
-    console.log('now i exist')
+    
+    if ($(".open")[0]){
     // Do something if class exists
-    bubbleWidth += 10; 
-    bubbleHeight += 10; 
-    console.log(bubbleWidth, bubbleHeight)
-    // $(".open").css("width", bubbleWidth);
-    // $(".open").css("height", bubbleHeight);
+    bubbleWidth += totalBubbleExpansion; 
+    bubbleHeight += totalBubbleExpansion; 
+    $(".open").css("width", bubbleWidth);
+    $(".open").css("height", bubbleHeight);
 
 } else {
-  console.log('did not exist')
     // Do something if class does not exist
     $("img").addClass("open");
   }
 }
 
 //if countDown number is clicked function starts to count down
+
+function bubblePop(){
+  $("img").hide();
+  $(".pop").show();
+   var e = $('.pop');
+    e.not(':animated').css({'opacity': 1 }).effect("scale", {origin:['middle','center'], from:{width:e.width()/2,height:e.height()/2}, percent: 100, direction: 'both', easing: "easeOutBounce" }, 700);
+  }
+
 
 //while timer is running disable button
 var disableButton = function(){
@@ -59,7 +67,7 @@ var disableButton = function(){
   }
 }
  
-  $('.countDown').click(function(){
+  $('.timerCountDown').click(function(){
     if(!timerStarted){
 //count down timer
     seconds = parseInt(seconds); 
@@ -77,36 +85,40 @@ var disableButton = function(){
             minutes--;
             seconds = 59; 
             stringOfMinutes = minutes+colon+seconds;
-            console.log('one ', stringOfMinutes, seconds)
           $('.countDown').html(stringOfMinutes);
             } else if(seconds > 0 ){
               seconds--; 
               lengthOfSeconds = seconds.toString().length;
             
               } else if(lengthOfSeconds < 2 && seconds > 0){
-                console.log(seconds, lengthOfSeconds)
                 seconds--;
                
               } else {
  
-       //make noise then clear timer
+       //make noise when timer is up
+            bubblePop();
             clearInterval(timerStarted);
             timerStarted = null;
             }
 
             if(lengthOfSeconds === 2 && seconds !== 0){
                 stringOfMinutes = minutes+colon+seconds;
-            console.log('two ', stringOfMinutes , seconds)
             $('.countDown').html(stringOfMinutes)
             } else {
                stringOfMinutes = minutes+colon+"0"+seconds;
-                console.log('three ', stringOfMinutes, seconds)
                 $('.countDown').html(stringOfMinutes);
             }
             startBubble();
-            console.log('each time')
               },1000) 
      }
+     else {
+ 
+       //make bubble reset when timer paused
+            bubbleHeight = 0;
+            bubbleWidth = 0; 
+            clearInterval(timerStarted);
+            timerStarted = null;
+            }
      disableButton(); 
   })
 
