@@ -34,20 +34,16 @@ if(noAction){
 
 //opens up bubble when timer started
 function startBubble(){
-    if ($(".open")[0]){
+      $("img").show();
       totalSeconds = minutesToCalculate * 60;
       totalBubbleExpansion = 300/totalSeconds;
 
     // Do something if class exists
       bubbleWidth += totalBubbleExpansion; 
       bubbleHeight += totalBubbleExpansion; 
-      $(".open").css("width", bubbleWidth);
-      $(".open").css("height", bubbleHeight);
+      $("img").css("width", bubbleWidth);
+      $("img").css("height", bubbleHeight);
 
-      } else {
-    // Do something if class does not exist
-    $("img").addClass("open");
-    }
   }
 
 //if countDown number is clicked function starts to count down
@@ -56,10 +52,10 @@ function resetBubble(){
     bubbleWidth = 0; 
 }
 
-//bubble inflates till timer tops
+//bubble pops when timer done
 function bubblePop(){
   $("img").hide();
-  $(".pop").show();
+  $(".pop").show().css('color', 'black');
    var e = $('.pop');
     e.not(':animated').css({'opacity': 1 }).effect("scale", {origin:['middle','center'], from:{width:e.width()/2,height:e.height()/2}, percent: 100, direction: 'both', easing: "easeOutBounce" }, 700);
   }
@@ -147,14 +143,15 @@ var disableButton = function(){
 })
 
   $('.increment').click(function(){
-    $(".pop").hide();
+    console.log('######## ', minutes, seconds)
+    $(".pop").hide()
     if(minutes === 0 && seconds <= 59) {
-
       minutes = 1; 
       countDown = 1; 
       seconds = "00"
       minutesToCalculate = minutes; 
       updateTime(countDown);
+
       } else {
         minutes++;
         countDown++
