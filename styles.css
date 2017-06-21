@@ -3,16 +3,27 @@ body {
   font-weight: bold;
 }
 
+.timersContainer {
+  position: relative;
+}
+
+.buttonDiv {
+  position: relative;
+}
+
+
+
 button, .breakTime, .workTime {
   display: inline-block;
 }
 
-.breakTime, .workTime {
-  padding: 10px;
+button {
+  margin-top: -20px;
 }
 
 .breakTime, .workTime, .countDown {
     font-size: 50px;
+    padding: 0 15px 0 15px;
 }
 
 .countDown {

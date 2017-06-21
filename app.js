@@ -2,7 +2,6 @@
 
 $(document).ready(function(){
       
-    //set timer, count down, once at zero makes a noise
 var seconds = "00"; 
 var colon = ":"
 var minutes = 1;
@@ -12,10 +11,12 @@ var breakTimer = 5;
 var timerStarted;
 var stringOfMinutes = minutes+colon+seconds;
 var lengthOfSeconds = seconds.toString().length;
-var totalSeconds = minutes * 60; 
+
 var bubbleWidth = 0;
 var bubbleHeight = 0; 
-var totalBubbleExpansion = 300/totalSeconds; 
+var minutesToCalculate = 1; 
+var totalSeconds = 0
+var totalBubbleExpansion = 0; 
 
 //sets counter to page
 var updateTime = function(currentCounter){
@@ -33,19 +34,21 @@ if(noAction){
 
 //opens up bubble when timer started
 function startBubble(){
-    
     if ($(".open")[0]){
-    // Do something if class exists
-    bubbleWidth += totalBubbleExpansion; 
-    bubbleHeight += totalBubbleExpansion; 
-    $(".open").css("width", bubbleWidth);
-    $(".open").css("height", bubbleHeight);
+      totalSeconds = minutesToCalculate * 60;
+      totalBubbleExpansion = 300/totalSeconds;
 
-} else {
+    // Do something if class exists
+      bubbleWidth += totalBubbleExpansion; 
+      bubbleHeight += totalBubbleExpansion; 
+      $(".open").css("width", bubbleWidth);
+      $(".open").css("height", bubbleHeight);
+
+      } else {
     // Do something if class does not exist
     $("img").addClass("open");
+    }
   }
-}
 
 //if countDown number is clicked function starts to count down
 function resetBubble(){
@@ -53,6 +56,7 @@ function resetBubble(){
     bubbleWidth = 0; 
 }
 
+//bubble inflates till timer tops
 function bubblePop(){
   $("img").hide();
   $(".pop").show();
@@ -69,7 +73,8 @@ var disableButton = function(){
      $('button').prop('disabled', true);
   }
 }
- 
+
+//timer countdown  
   $('.timerCountDown').click(function(){
     if(!timerStarted){
 //count down timer
@@ -77,36 +82,36 @@ var disableButton = function(){
 
       timerStarted = setInterval(
         function(){ 
-        
+
         if(seconds === 0){
           lengthOfSeconds = 2; 
           } else {
            lengthOfSeconds = seconds.toString().length;
          }
 
-          if(seconds === 0 && minutes !== 0){
+        if(seconds === 0 && minutes !== 0){
             countDown--; 
             minutes--;
             seconds = 59; 
             stringOfMinutes = minutes+colon+seconds;
-          $('.countDown').html(stringOfMinutes);
+         $('.countDown').html(stringOfMinutes);
             } else if(seconds > 0 ){
               seconds--; 
                console.log('minutes and seconds ', minutes, seconds)
               lengthOfSeconds = seconds.toString().length;
             
-              } else if(lengthOfSeconds < 2 && seconds > 0){
+            } else if(lengthOfSeconds < 2 && seconds > 0){
                 seconds--;
                
-              } else {
+            } else {
  
        //when timer is up
-                bubblePop();
-                resetBubble(); 
-                clearInterval(timerStarted);
-                timerStarted = null;
-                $('button').prop('disabled', false);
-              }
+              bubblePop();
+              resetBubble(); 
+              clearInterval(timerStarted);
+              timerStarted = null;
+              $('button').prop('disabled', false);
+            }
 
             if(lengthOfSeconds === 2 && seconds !== 0){
                 stringOfMinutes = minutes+colon+seconds;
@@ -115,16 +120,13 @@ var disableButton = function(){
                stringOfMinutes = minutes+colon+"0"+seconds;
                 $('.countDown').html(stringOfMinutes);
             }
-            startBubble();
-              },1000) 
+           startBubble();
+              },100) 
      } else {
- 
        //make bubble reset when timer paused
-       console.log('in here')
             resetBubble()
             clearInterval(timerStarted);
             timerStarted = null;
-            console.log(minutes, seconds)
         }
 
      disableButton(); 
@@ -147,23 +149,23 @@ var disableButton = function(){
   $('.increment').click(function(){
     $(".pop").hide();
     if(minutes === 0 && seconds <= 59) {
-    minutes = 1; 
-    countDown = 1; 
-    seconds = "00"
-    updateTime(countDown);
+
+      minutes = 1; 
+      countDown = 1; 
+      seconds = "00"
+      minutesToCalculate = minutes; 
+      updateTime(countDown);
       } else {
-    minutes++;
-    countDown++
-    seconds = "00"
-    updateTime(countDown);
-    }
-     console.log('######incremented ', minutes, seconds, countDown)
+        minutes++;
+        countDown++
+        seconds = "00"
+        minutesToCalculate = minutes; 
+        updateTime(countDown);
+      }
   })
 
 
 //then a rest period, once at zero a start noise
 $('.breakTime').html(breakTimer);
-
-
 
 });
