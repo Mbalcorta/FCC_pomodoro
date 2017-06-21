@@ -3,13 +3,13 @@
 $(document).ready(function(){
       
 var seconds = "00"; 
-var colon = ":"
 var minutes = 1;
+var setMinutes = 1; 
 var noAction = true;
 var countDown = minutes;
 var breakTimer = 5;  
-var timerStarted;
-var stringOfMinutes = minutes+colon+seconds;
+var timerStarted = false;
+var stringOfMinutes = minutes+":"+seconds;
 var lengthOfSeconds = seconds.toString().length;
 
 var bubbleWidth = 0;
@@ -20,9 +20,10 @@ var totalBubbleExpansion = 0;
 
 //sets counter to page
 var updateTime = function(currentCounter){
-  $('.workTime').html(currentCounter);
-  stringOfMinutes = currentCounter+colon+seconds
+  $('.workTime').html(setMinutes);
+  stringOfMinutes = currentCounter+":"+seconds
   $('.countDown').html(stringOfMinutes);
+  console.log('What time is it ', setMinutes, stringOfMinutes)
 }
 
 //runs counter first time
@@ -89,7 +90,7 @@ var disableButton = function(){
             countDown--; 
             minutes--;
             seconds = 59; 
-            stringOfMinutes = minutes+colon+seconds;
+            stringOfMinutes = minutes+":"+seconds;
          $('.countDown').html(stringOfMinutes);
             } else if(seconds > 0 ){
               seconds--; 
@@ -110,10 +111,10 @@ var disableButton = function(){
             }
 
             if(lengthOfSeconds === 2 && seconds !== 0){
-                stringOfMinutes = minutes+colon+seconds;
+                stringOfMinutes = minutes+":"+seconds;
             $('.countDown').html(stringOfMinutes)
             } else {
-               stringOfMinutes = minutes+colon+"0"+seconds;
+               stringOfMinutes = minutes+":"+"0"+seconds;
                 $('.countDown').html(stringOfMinutes);
             }
            startBubble();
@@ -134,28 +135,40 @@ var disableButton = function(){
 
   $('.deincrement').click(function(){
     $(".pop").hide();
-    if(minutes > 1){
-      minutes--
-      countDown--
-      seconds = "00"
+    if(minutes > 1 && minutes === setMinutes){
+      minutes--;
+      countDown--;
+      setMinutes--; 
+      seconds = "00";
       updateTime(countDown);
-    }
+    } else if(minutes > 1 ){
+      setMinutes = minutes; 
+      countDown = minutes; 
+      seconds = "00";
+      updateTime(countDown);
+    } 
 })
 
   $('.increment').click(function(){
-    console.log('######## ', minutes, seconds)
+    
     $(".pop").hide()
-    if(minutes === 0 && seconds <= 59) {
+    if(minutes === 0 && seconds <= 59 && timerStarted !== null) {
       minutes = 1; 
+      setMinutes++; 
       countDown = 1; 
       seconds = "00"
       minutesToCalculate = minutes; 
       updateTime(countDown);
-
-      } else {
+      } else if(timerStarted === null && minutes !== setMinutes){
+        minutes = setMinutes;
+        countDown = minutes;
+        seconds = "00"; 
+        updateTime(countDown);
+      } else{
         minutes++;
-        countDown++
-        seconds = "00"
+        setMinutes++; 
+        countDown++;
+        seconds = "00";
         minutesToCalculate = minutes; 
         updateTime(countDown);
       }
