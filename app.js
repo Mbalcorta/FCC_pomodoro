@@ -3,8 +3,8 @@
 $(document).ready(function(){
       
 var seconds = "00"; 
-var minutes = 1;
-var setMinutes = 1; 
+var minutes = 25;
+var setMinutes = 25; 
 var noAction = true;
 var countDown = minutes;
 var breakTimer = 5;  
@@ -13,7 +13,7 @@ var stringOfMinutes = minutes+":"+seconds;
 var lengthOfSeconds = seconds.toString().length;
 var bubbleWidth = 0;
 var bubbleHeight = 0; 
-var minutesToCalculate = 1; 
+var minutesToCalculate = 25; 
 var totalSeconds = 0
 var totalBubbleExpansion = 0; 
 var workSession = '<h2>work</h2>';
@@ -57,7 +57,6 @@ function resetBubble(){
 }
 
 function updateBreaktimer(breakTime){
-    breakNow = true; 
     minutes = breakTimer; 
     seconds = "00"; 
     minutesToCalculate = breakTimer;
@@ -81,12 +80,15 @@ if(!breakNow){
     updateBreaktimer(breakTimer)
      $('.timerCountDown').trigger("click");
   }, 2000);
+  breakNow = true;
  } else {
+    breakNow = false; 
     $('.countDown').html(breakSession+stringOfMinutes);
     $('.countDown').slideUp();
   setTimeout(function() {
     $('.countDown').slideDown();
-      seconds = "00"; 
+      seconds = "00";
+      setMinutes = 0;  
       stringOfMinutes = setMinutes +":"+seconds; 
     $('.countDown').html( workSession+stringOfMinutes)
     $(".pop").hide();
@@ -98,14 +100,14 @@ if(!breakNow){
 
 //bubble pops when timer done
 function bubblePop(){
-  if(minutes !== 0 && seconds !== "00")
   $("img").hide();
   $(".pop").show().css('color', 'black');
    var e = $('.pop');
     e.not(':animated').css({'opacity': 1 }).effect("scale", {origin:['middle','center'], from:{width:e.width()/2,height:e.height()/2}, percent: 100, direction: 'both', easing: "easeOutBounce" }, 1000);
-    
+
+     resetBubble();
     //enable break function
-    breakTime(); 
+     breakTime(); 
   }
 
 
@@ -151,10 +153,8 @@ function disableButton(){
                 seconds--;
                
             } else {
- 
        //when timer is up
-              bubblePop();
-              resetBubble(); 
+              bubblePop(); 
               clearInterval(timerStarted);
               timerStarted = null;
               $('button').prop('disabled', false);
@@ -168,10 +168,9 @@ function disableButton(){
                 $('.countDown').html(session+stringOfMinutes);
             }
            startBubble();
-              },50) 
+              },1000) 
      } else {
-       //make bubble reset when timer paused
-            resetBubble()
+       //when timer paused
             clearInterval(timerStarted);
             timerStarted = null;
         }
@@ -201,25 +200,27 @@ function disableButton(){
    
     $(".pop").hide()
     if(minutes === 0 && seconds <= 59 && timerStarted !== null) {
-      minutes = 1; 
-      setMinutes++; 
-      countDown = 1; 
-      seconds = "00"
-      minutesToCalculate = minutes; 
-      updateTime(countDown);
+        minutes = 1; 
+        setMinutes++; 
+        countDown = 1; 
+        seconds = "00"
+        minutesToCalculate = minutes; 
+        updateTime(countDown);
       } else if(timerStarted === null && minutes !== setMinutes){
-        minutes = setMinutes;
+        minutes++;
         countDown = minutes;
-        console.log('minutes, countdown', minutes, countDown)
+        setMinutes = minutes;
+        minutesToCalculate = minutes;
         seconds = "00"; 
         updateTime(countDown);
-      } else{
+      } else {
         minutes++;
         setMinutes++; 
-        countDown++;
+        countDown = minutes; 
         seconds = "00";
         minutesToCalculate = minutes; 
         updateTime(countDown);
+
       }
   })
 
